@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Switching Detection Dashboard - Interview Integrity Guard</title>
+    <!-- Custom styling stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Matrix digital rain background canvas -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Main Dashboard wrapper -->
+    <div class="dashboard-container">
+        
+        <!-- Header: Displays branding, title, and metadata badges -->
+        <header>
+            <div class="title-area">
+                <h1>Interview Integrity Guard</h1>
+                <p>Real-time tab activity monitoring and focus tracking console</p>
+            </div>
+            <div class="badge">
+                Frontend JS Internship Task
+            </div>
+        </header>
+
+        <!-- Status Panel: Highlights the active tracking state and provides action triggers -->
+        <section class="glass-panel status-panel" aria-label="Monitoring Status">
+            <div class="status-info">
+                <!-- Glowing pulsing ring showing active/inactive state -->
+                <div id="status-indicator-ring" class="status-indicator-ring state-active">
+                    <div class="status-dot"></div>
+                </div>
+                <div class="status-text-details">
+                    <h2>Current Monitoring State</h2>
+                    <!-- Text changes dynamically based on state: Active, Inactive, or Pending -->
+                    <div id="current-state-label" class="current-state-label">Monitoring Active</div>
+                </div>
+            </div>
+            
+            <!-- Actions buttons to manage history logs -->
+            <div class="control-actions">
+                <button id="toggle-monitor-btn" class="btn" title="Toggle active detection monitoring state">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9v6m-4.5 0V9M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span id="toggle-btn-text">Stop Detection</span>
+                </button>
+                <button id="export-json-btn" class="btn btn-primary" title="Export logs as a JSON file">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"></path>
+                    </svg>
+                    Export JSON
+                </button>
+                <button id="clear-logs-btn" class="btn btn-danger" title="Clear all logs from browser storage">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
+                    </svg>
+                    Clear History
+                </button>
+            </div>
+        </section>
+
+        <!-- Metrics Grid: Statistical summary cards of session violations -->
+        <section class="metrics-grid" aria-label="Session Analytics">
+            <!-- Metric 1: Total switch-away violations -->
+            <div class="glass-panel metric-card">
+                <span class="metric-label">Total Violations</span>
+                <span id="metric-violations" class="metric-value">0</span>
+                <span class="metric-footer">Committed leaves (>1000ms duration)</span>
+            </div>
+            <!-- Metric 2: Last detected switch-away timestamp -->
+            <div class="glass-panel metric-card">
+                <span class="metric-label">Last Switched Away</span>
+                <span id="metric-last-left" class="metric-value">None</span>
+                <span class="metric-footer">Timestamp of last tab violation</span>
+            </div>
+            <!-- Metric 3: Last detected return timestamp -->
+            <div class="glass-panel metric-card">
+                <span class="metric-label">Last Returned</span>
+                <span id="metric-last-returned" class="metric-value">None</span>
+                <span class="metric-footer">Timestamp of last focused return</span>
+            </div>
+        </section>
+
+        <!-- Logs Section: Detailed breakdown table showing all focus events -->
+        <section class="glass-panel logs-section">
+            <div class="logs-header">
+                <h3>Integrity Violation Audit Log</h3>
+            </div>
+
+            <!-- Scrollable container for tables -->
+            <div class="logs-table-container">
+                <table class="logs-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Event Type</th>
+                            <th scope="col">Trigger & Status</th>
+                            <th scope="col">Timestamp</th>
+                            <th scope="col">Backend Sync Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logs-table-body">
+                        <!-- Dynamically populated rows via tabMonitor.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Testing & Developer Sandbox Guidelines -->
+        <section class="glass-panel guide-panel">
+            <h3>System Verification Sandbox</h3>
+            <div class="guide-grid">
+                
+                <div class="guide-step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">
+                        <h4>Trigger Switch</h4>
+                        <p>Open another tab, click on your desktop, minimize the browser, or select another app window. This will change monitoring to <strong>Pending (Debounce)</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">
+                        <h4>Commit Leave</h4>
+                        <p>Stay focused away from this tab for <strong>more than 1.0 second</strong>. Return here. A <code>TAB_SWITCHED</code> and <code>TAB_RETURNED</code> log pair will generate.</p>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">
+                        <h4>Test Debounce Safety</h4>
+                        <p>Switch tabs or click outside the window and return in <strong>less than 1.0 second</strong>. Check that <strong>no logs</strong> are generated.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer containing copyrights and metadata -->
+        <footer>
+            <p>Interview Anti-Cheating & Integrity Detection Console.</p>
+            <p>Designed and built for internship task submissions. Powered by modern browser Web APIs.</p>
+        </footer>
+
+    </div>
+
+    <!-- Core Javascript logic imports at document end to prevent render blocking -->
+    <script src="tabMonitor.js"></script>
+</body>
+</html>
