@@ -2,6 +2,11 @@
 
 A production-ready frontend monitoring dashboard designed to detect and log candidate tab switching, window blurring, browser minimization, and focus loss during online assessments. Built with modern web development standards, featuring a glassmorphism dark-mode interface and an elegant state-machine-driven debounce algorithm.
 
+## 🔗 Quick Preview Link
+
+- Open the dashboard here: [index.html](index.html)
+- If you are using VS Code Live Server, the preview URL is typically: http://127.0.0.1:5500
+
 ---
 
 ## 🌟 Features
